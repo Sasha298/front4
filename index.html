@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Моя галерея</title>
+	<style>
+		body {
+        background-image: url("https://www.imgonline.com.ua/examples/rainbow-background-3-big.jpg");
+        background-size: cover;
+        }
+		.gallery-img {
+			width: 300px;
+			height: 300px;
+			object-fit: cover;
+			margin: 15px;
+			border: 2px solid black;
+			border-radius: 10px;
+		}
+		.gallery-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+			margin: 20px;
+		}
+		h1 {
+			font-family: Bell MT, sans-serif;
+			text-align: center;
+			margin: 40px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Моя галерея</h1>
+	<div class="gallery-container"></div>
+
+	<script>
+		fetch('https://jsonplaceholder.typicode.com/photos')
+			.then(response => response.json())
+			.then(data => {
+				const gallery = data.slice(0, 12);
+				const galleryHTML = gallery.map(image => `
+					<div>
+						<img class="gallery-img" src="${image.url}" alt="${image.title}">
+					</div>
+				`).join('');
+				document.querySelector('.gallery-container').innerHTML = galleryHTML;
+			})
+			.catch(error => console.error(error));
+	</script>
+</body>
+</html>
